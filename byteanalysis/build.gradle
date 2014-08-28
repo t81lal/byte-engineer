@@ -1,0 +1,14 @@
+task mavenReleaseJar(type: Jar) {
+    from "$buildDir/classes/main"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact mavenReleaseJar
+            groupId 'eu.bibl.byteengineer'
+            artifactId 'byteanalysis'
+            version project.version
+        }
+    }
+}

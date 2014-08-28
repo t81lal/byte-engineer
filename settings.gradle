@@ -1,0 +1,4 @@
+rootProject.name = 'byte-engineer'
+
+include 'byteio','byteanalysis'
+
