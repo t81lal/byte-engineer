@@ -9,8 +9,8 @@ This README would normally document whatever steps are necessary to get your app
 
 ### How do I get set up? ###
 
-* Summary of set up
-   - Simply run the ```build.gradle``` script
+1. Simply run the ```build.gradle``` script
+2. Add to build path of your Java application
 
 ### Contribution guidelines ###
 
