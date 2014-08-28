@@ -10,7 +10,7 @@ This README would normally document whatever steps are necessary to get your app
 ### How do I get set up? ###
 
 * Summary of set up
-   - Simply run the ```#!build.gradle``` script
+   - Simply run the `build.gradle` script
 * Configuration
 * Dependencies
 * Database configuration
