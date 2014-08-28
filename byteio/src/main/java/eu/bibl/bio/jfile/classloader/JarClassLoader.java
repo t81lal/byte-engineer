@@ -1,13 +1,14 @@
 package eu.bibl.bio.jfile.classloader;
 
-import eu.bibl.banalysis.storage.classes.ClassContainer;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.tree.ClassNode;
-import sun.misc.URLClassPath;
-
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Set;
+
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.tree.ClassNode;
+
+import sun.misc.URLClassPath;
+import eu.bibl.banalysis.storage.classes.ClassContainer;
 
 /**
  * Specific {@link ClassLoader} for loading things from external JarFiles, caching loaded classes as it goes along. <br>
@@ -16,30 +17,39 @@ import java.util.Set;
  */
 public class JarClassLoader extends ClassLoader {
 
-	protected ClassContainer contents;
+	/** Associated path for classes **/
+	protected ClassContainer container;
+	/** Previously loaded classes **/
 	protected HashMap<String, Class<?>> cache;
+	/** Resource class path **/
 	protected URLClassPath ucp;
 
 	/**
-	 * @param contents
-	 *            Reference to the JarContents object.
+	 * @param contents Reference to the JarContents object.
 	 */
-	public JarClassLoader(ClassContainer contents) {
-		super();
-		this.contents = contents;
+	public JarClassLoader(ClassContainer container) {
+		this.container = container;
 		cache = new HashMap<String, Class<?>>();
-		Set<URL> urlSet = contents.resources.keySet();
+		Set<URL> urlSet = container.resources.keySet();
 		URL[] urls = urlSet.toArray(new URL[urlSet.size()]);
 		ucp = new URLClassPath(urls);
 	}
 
+	/**
+	 * Add a resource URL to the class path by force.
+	 * @param url URL to add.
+	 */
 	public void addJar(URL url) {
 		ucp.addURL(url);
 	}
 
-	public void addJar(ClassContainer contents) {
-		this.contents.add(contents);
-		for (URL url : contents.resources.keySet())
+	/**
+	 * Adds the class contents of the {@link ClassContainer} as well as the resource locations.
+	 * @param contents Contents to add.
+	 */
+	public void addJar(ClassContainer container) {
+		this.container.add(container);
+		for (URL url : container.resources.keySet())
 			ucp.addURL(url);
 	}
 
@@ -49,8 +59,7 @@ public class JarClassLoader extends ClassLoader {
 	}
 
 	/**
-	 * @param cn
-	 *            ClassNode to define
+	 * @param cn ClassNode to define
 	 * @return Defined Class.
 	 */
 	public Class<?> defineNode(ClassNode cn) {
@@ -61,10 +70,8 @@ public class JarClassLoader extends ClassLoader {
 	/**
 	 * Defines a ClassNode with a custom {@link ClassWriter}
 	 *
-	 * @param cn
-	 *            ClassNode to define
-	 * @param cw
-	 *            ClassWriter to define with
+	 * @param cn ClassNode to define
+	 * @param cw ClassWriter to define with
 	 * @return Defined Class.
 	 */
 	public Class<?> defineNode(ClassNode cn, ClassWriter cw) {
@@ -86,7 +93,7 @@ public class JarClassLoader extends ClassLoader {
 		name = name.replace(".", "/");
 		if (cache.containsKey(name))
 			return cache.get(name);
-		ClassNode node = contents.getNodes().get(name);
+		ClassNode node = container.getNodes().get(name);
 		if (node != null)
 			return defineNode(node);
 		// Class<?> c = super.loadClass(name);
@@ -100,6 +107,11 @@ public class JarClassLoader extends ClassLoader {
 		return c;
 	}
 
+	/**
+	 * Forces the class to be put into the cache overwriting the previously loaded one.
+	 * @param name Fully qualified name of the class.
+	 * @param c Class to add.
+	 */
 	public void cacheClass(String name, Class<?> c) {
 		if ((c != null) && !c.getName().startsWith("java"))
 			cache.put(name, c);

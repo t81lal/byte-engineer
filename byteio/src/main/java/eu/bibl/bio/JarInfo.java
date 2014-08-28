@@ -12,13 +12,13 @@ import java.util.jar.JarFile;
  * @author Bibl
  */
 public class JarInfo {
-	
+
 	public static boolean VERBOSE_WARNINGS = false;
-	
+
 	private String path;
 	private JarType type;
 	private JarURLConnection connection;
-	
+
 	/**
 	 * Creates a new holder as the JarFile is on the local system.
 	 * @param path Path to jar.
@@ -26,7 +26,7 @@ public class JarInfo {
 	public JarInfo(File path) {
 		this(path.getAbsolutePath(), JarType.FILE);
 	}
-	
+
 	/**
 	 * Creates a new holder.
 	 * @param path Path to jar.
@@ -36,7 +36,7 @@ public class JarInfo {
 		this.path = path;
 		this.type = type;
 	}
-	
+
 	/**
 	 * Sets up the connection to the JarFile.
 	 * @return True for success else false.
@@ -64,28 +64,28 @@ public class JarInfo {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * @return The {@link JarURLConnection} to the jar.
 	 */
 	public JarURLConnection getConnection() {
 		return connection;
 	}
-	
+
 	/**
 	 * @return {@link URL} to the JarFile.
 	 */
 	public URL getJarURL() {
 		return connection.getJarFileURL();
 	}
-	
+
 	/**
 	 * @return Real path to JarFile.
 	 */
 	public String getPath() {
 		return path;
 	}
-	
+
 	/**
 	 * @return The actual {@link JarFile} object from the connection.
 	 */
@@ -98,7 +98,7 @@ public class JarInfo {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Formats a string ready for a {@link JarURLConnection} to connect to.
 	 * @param url Location of the JarFile.
