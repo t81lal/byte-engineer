@@ -11,11 +11,6 @@ This README would normally document whatever steps are necessary to get your app
 
 * Summary of set up
    - Simply run the ```build.gradle``` script
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
 
 ### Contribution guidelines ###
 
