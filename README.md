@@ -17,7 +17,7 @@
 * Add useful features
 * Create tests
 * Criticise
-   - Nicely.
+    - Nicely.
 
 ### Who do I talk to? ###
 
