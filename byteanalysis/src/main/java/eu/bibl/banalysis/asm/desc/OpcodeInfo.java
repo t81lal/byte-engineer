@@ -21,7 +21,7 @@ import eu.bibl.banalysis.filter.InstructionFilter;
  */
 public class OpcodeInfo implements Opcodes {
 	
-	/** A map of numerical opcodes to their names. **/
+	/** A map of numerical opcodes to their descs. **/
 	public static final HashMap<Integer, String> OPCODES;
 	/** A map of named opcodes to their numerical equivalents. **/
 	public static final HashMap<String, Integer> OPCODE_NAMES;
