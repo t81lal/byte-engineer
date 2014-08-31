@@ -1,11 +1,5 @@
 package eu.bibl.bio.jfile.in;
 
-import eu.bibl.banalysis.asm.ClassNode;
-import eu.bibl.banalysis.storage.classes.ClassContainer;
-import eu.bibl.bio.JarInfo;
-import eu.bibl.bio.jfile.classloader.JarClassLoader;
-import org.objectweb.asm.ClassReader;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,15 +10,22 @@ import java.util.HashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class JarDownloader {
+import org.objectweb.asm.ClassReader;
 
+import eu.bibl.banalysis.asm.ClassNode;
+import eu.bibl.banalysis.storage.classes.ClassContainer;
+import eu.bibl.bio.JarInfo;
+import eu.bibl.bio.jfile.classloader.JarClassLoader;
+
+public class JarDownloader {
+	
 	/** Whether or not to print out warnings (default=true). **/
 	public static boolean VERBOSE_WARNINGS = true;
-
+	
 	protected JarInfo[] jars;
 	protected ClassContainer contents;
 	protected JarClassLoader classLoader;
-
+	
 	/**
 	 * Creates a new JarDownloader without parsing.
 	 * @param jars JarFile informations.
@@ -35,14 +36,14 @@ public class JarDownloader {
 		contents = new ClassContainer();
 		classLoader = new JarClassLoader(contents);
 	}
-
+	
 	/**
 	 * Parses all the JarFiles and stores the contents.
 	 * @param print Whether to print the results.
 	 * @return True if succeeded else false.
 	 */
 	public boolean parse(boolean print) {
-		for(JarInfo info : jars) {
+		for (JarInfo info : jars) {
 			if (!info.setupConnection())
 				return false;
 			if (!parse(info, print))
@@ -50,14 +51,14 @@ public class JarDownloader {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Parses all the JarFiles and stores the contents.
 	 * @return True if succeeded else false.
 	 */
 	public boolean parse() {
 		boolean failed = true;
-		for(JarInfo info : jars) {
+		for (JarInfo info : jars) {
 			if (!info.setupConnection())
 				failed = false;
 			if (!parse(info, true))
@@ -65,7 +66,7 @@ public class JarDownloader {
 		}
 		return failed;
 	}
-
+	
 	/**
 	 * Parses a JarFile and stores the contents.
 	 * @param info JarFile information
@@ -128,7 +129,7 @@ public class JarDownloader {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Adds a jarfile resource to the cache.
 	 * @param jarUrl URL of the {@link JarFile}
@@ -144,21 +145,21 @@ public class JarDownloader {
 			contents.resources.put(jarUrl, res);
 		}
 	}
-
+	
 	/**
 	 * @return Contents of the JarFile.
 	 */
 	public ClassContainer getContents() {
 		return contents;
 	}
-
+	
 	/**
 	 * @return The jar loading specific {@link ClassLoader}
 	 */
 	public JarClassLoader getClassLoader() {
 		return classLoader;
 	}
-
+	
 	/**
 	 * Utility function to read a byte[] full from an InputStream. <br>
 	 * Utility method that I didn't think should be on it's own in a helper class.<br>
