@@ -45,6 +45,23 @@ public abstract class Analyser {
 		classHook = new ClassMappingData(name);
 	}
 	
+	public void addField(FieldMappingData field) {
+		if (field.getFieldOwner() == null)
+			field.setFieldOwner(classHook);
+		if (field.getMethodOwner() == null)
+			field.setMethodOwner(classHook);
+		hookMap.addField(field);
+	}
+	
+	public void addMethod(CallbackMappingData method) {
+		if (method.getMethodOwner() == null)
+			method.setMethodOwner(classHook);
+		if (method.getCallbackOwner() == null)
+			method.setCallbackOwner(classHook);
+		
+		hookMap.addMethod(method);
+	}
+	
 	/** ClassNode being analysed **/
 	protected ClassNode cn;
 	
