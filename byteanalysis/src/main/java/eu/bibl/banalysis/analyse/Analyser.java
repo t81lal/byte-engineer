@@ -119,6 +119,14 @@ public abstract class Analyser implements Opcodes {
 		return methodHooks;
 	}
 	
+	public ClassMappingData getClassHook() {
+		return classHook;
+	}
+	
+	public void setClassHook(ClassMappingData classHook) {
+		this.classHook = classHook;
+	}
+	
 	/**
 	 * Checks if this ClassNode should be analysed by this analyser.
 	 * @return True if the ClassNode is to be run on, false otherwise.
