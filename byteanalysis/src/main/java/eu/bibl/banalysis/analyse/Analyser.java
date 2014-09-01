@@ -54,19 +54,24 @@ public abstract class Analyser implements Opcodes {
 	}
 	
 	public void addField(FieldMappingData field) {
+		if (field == null)
+			return;
 		if (field.getFieldOwner() == null)
 			field.setFieldOwner(classHook);
 		if (field.getMethodOwner() == null)
 			field.setMethodOwner(classHook);
+		field.identify();
 		hookMap.addField(field);
 	}
 	
 	public void addMethod(CallbackMappingData method) {
+		if (method == null)
+			return;
 		if (method.getMethodOwner() == null)
 			method.setMethodOwner(classHook);
 		if (method.getCallbackOwner() == null)
 			method.setCallbackOwner(classHook);
-		
+		method.identify();
 		hookMap.addMethod(method);
 	}
 	
@@ -81,6 +86,7 @@ public abstract class Analyser implements Opcodes {
 			InterfaceMappingData imd = run();
 			if (imd != null)
 				classHook.setInterfaceData(imd);
+			classHook.identify();
 			hookMap.addClass(classHook);
 		}
 	}
