@@ -105,6 +105,14 @@ public abstract class Analyser implements Opcodes {
 		this.hookMap = hookMap;
 	}
 	
+	public FieldMappingData[] getFieldHooks() {
+		return fieldHooks;
+	}
+	
+	public CallbackMappingData[] getMethodHooks() {
+		return methodHooks;
+	}
+	
 	/**
 	 * Checks if this ClassNode should be analysed by this analyser.
 	 * @return True if the ClassNode is to be run on, false otherwise.
