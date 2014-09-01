@@ -26,6 +26,24 @@ public class AnalyserCache {
 		cache.put(analyser.getName(), analyser);
 	}
 	
+	public static Analyser contextGet(String name) {
+		if (currentContext == null)
+			return null;
+		return currentContext.get(name);
+	}
+	
+	public static void contextCache(Analyser analyser) {
+		if (currentContext == null)
+			return;
+		currentContext.cache(analyser);
+	}
+	
+	public static void contextCache(String name, Analyser analyser) {
+		if (currentContext == null)
+			return;
+		currentContext.cache(name, analyser);
+	}
+	
 	public static AnalyserCache currentContext() {
 		return currentContext;
 	}
