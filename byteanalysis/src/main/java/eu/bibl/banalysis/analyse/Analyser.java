@@ -1,5 +1,7 @@
 package eu.bibl.banalysis.analyse;
 
+import org.objectweb.asm.Opcodes;
+
 import eu.bibl.banalysis.asm.ClassNode;
 import eu.bibl.banalysis.storage.CallbackMappingData;
 import eu.bibl.banalysis.storage.ClassMappingData;
@@ -11,7 +13,7 @@ import eu.bibl.banalysis.storage.classes.ClassContainer;
 /**
  * @author sc4re
  */
-public abstract class Analyser {
+public abstract class Analyser implements Opcodes {
 	
 	/** Name of Analyser **/
 	protected final String name;
@@ -34,6 +36,9 @@ public abstract class Analyser {
 		fieldHooks = new FieldMappingData[0];
 		methodHooks = new CallbackMappingData[0];
 		classHook = new ClassMappingData(name);
+		
+		if (AnalyserCache.currentContext() != null)
+			AnalyserCache.currentContext().cache(this);
 	}
 	
 	public Analyser(String name, ClassContainer container, HookMap hookMap) {
@@ -43,6 +48,9 @@ public abstract class Analyser {
 		fieldHooks = new FieldMappingData[0];
 		methodHooks = new CallbackMappingData[0];
 		classHook = new ClassMappingData(name);
+		
+		if (AnalyserCache.currentContext() != null)
+			AnalyserCache.currentContext().cache(this);
 	}
 	
 	public void addField(FieldMappingData field) {
@@ -125,5 +133,9 @@ public abstract class Analyser {
 				return false;
 		}
 		return true;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }
