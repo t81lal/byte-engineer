@@ -1,17 +1,20 @@
 package eu.bibl.banalysis.storage;
 
-public class FieldMappingData extends Identifiable {
+import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.FieldNode;
 
+public class FieldMappingData extends Identifiable {
+	
 	protected ClassMappingData fieldOwner;
 	protected ClassMappingData methodOwner;
 	protected MappingData name;
 	protected MappingData desc;
 	protected boolean isStatic;
-
+	
 	public FieldMappingData(MappingData name, MappingData desc, boolean isStatic) {
 		this(null, null, name, desc, isStatic);
 	}
-
+	
 	public FieldMappingData(ClassMappingData fieldOwner, ClassMappingData methodOwner, MappingData name, MappingData desc, boolean isStatic) {
 		this.fieldOwner = fieldOwner;
 		this.methodOwner = methodOwner;
@@ -19,58 +22,98 @@ public class FieldMappingData extends Identifiable {
 		this.desc = desc;
 		this.isStatic = isStatic;
 	}
-
+	
+	public FieldMappingData buildObf(FieldInsnNode fin) {
+		if (name != null) {
+			name.setObfuscatedName(fin.name);
+		}
+		if (desc != null) {
+			desc.setObfuscatedName(fin.desc);
+		}
+		return this;
+	}
+	
+	public FieldMappingData buildObf(FieldNode fn) {
+		if (name != null) {
+			name.setObfuscatedName(fn.name);
+		}
+		if (desc != null) {
+			desc.setObfuscatedName(fn.desc);
+		}
+		return this;
+	}
+	
+	public FieldMappingData buildRefac(FieldInsnNode fin) {
+		if (name != null) {
+			name.setRefactoredName(fin.name);
+		}
+		if (desc != null) {
+			desc.setRefactoredName(fin.desc);
+		}
+		return this;
+	}
+	
+	public FieldMappingData buildRefac(FieldNode fn) {
+		if (name != null) {
+			name.setRefactoredName(fn.name);
+		}
+		if (desc != null) {
+			desc.setRefactoredName(fn.desc);
+		}
+		return this;
+	}
+	
 	public MappingData getFieldOwner() {
 		return fieldOwner;
 	}
-
+	
 	public FieldMappingData setFieldOwner(ClassMappingData fieldOwner) {
 		this.fieldOwner = fieldOwner;
 		return this;
 	}
-
+	
 	public MappingData getMethodOwner() {
 		return methodOwner;
 	}
-
+	
 	public FieldMappingData setMethodOwner(ClassMappingData methodOwner) {
 		this.methodOwner = methodOwner;
 		return this;
 	}
-
+	
 	public MappingData getName() {
 		return name;
 	}
-
+	
 	public FieldMappingData setName(MappingData name) {
 		this.name = name;
 		return this;
 	}
-
+	
 	public MappingData getDesc() {
 		return desc;
 	}
-
+	
 	public FieldMappingData setDesc(MappingData desc) {
 		this.desc = desc;
 		return this;
 	}
-
+	
 	public boolean isStatic() {
 		return isStatic;
 	}
-
+	
 	public FieldMappingData setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
 		return this;
 	}
-
+	
 	@Override
 	public FieldMappingData identify() {
 		super.identify();
 		return this;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -82,7 +125,7 @@ public class FieldMappingData extends Identifiable {
 		result = (prime * result) + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

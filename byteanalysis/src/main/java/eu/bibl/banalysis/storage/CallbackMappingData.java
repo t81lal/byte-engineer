@@ -1,7 +1,10 @@
 package eu.bibl.banalysis.storage;
 
-public class CallbackMappingData extends Identifiable {
+import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.MethodNode;
 
+public class CallbackMappingData extends Identifiable {
+	
 	protected ClassMappingData methodOwner;
 	protected ClassMappingData callbackOwner;
 	protected MappingData methodName;
@@ -9,11 +12,11 @@ public class CallbackMappingData extends Identifiable {
 	protected MappingData callbackName;
 	protected MappingData callbackDesc;
 	protected boolean isStatic;
-
+	
 	public CallbackMappingData(MappingData methodName, MappingData methodDesc, MappingData callbackName, MappingData callbackDesc, boolean isStatic) {
 		this(null, null, methodName, methodDesc, callbackName, callbackDesc, isStatic);
 	}
-
+	
 	public CallbackMappingData(ClassMappingData methodOwner, ClassMappingData callbackOwner, MappingData methodName, MappingData methodDesc, MappingData callbackName, MappingData callbackDesc, boolean isStatic) {
 		this.methodOwner = methodOwner;
 		this.callbackOwner = callbackOwner;
@@ -23,76 +26,156 @@ public class CallbackMappingData extends Identifiable {
 		this.callbackDesc = callbackDesc;
 		this.isStatic = isStatic;
 	}
-
+	
+	public CallbackMappingData buildObfMethod(MethodInsnNode min) {
+		if (methodName != null) {
+			methodName.setObfuscatedName(min.name);
+		}
+		if (methodDesc != null) {
+			methodDesc.setObfuscatedName(min.desc);
+		}
+		return this;
+	}
+	
+	public CallbackMappingData buildObfMethod(MethodNode mn) {
+		if (methodName != null) {
+			methodName.setObfuscatedName(mn.name);
+		}
+		if (methodDesc != null) {
+			methodDesc.setObfuscatedName(mn.desc);
+		}
+		return this;
+	}
+	
+	public CallbackMappingData buildRefacMethod(MethodInsnNode min) {
+		if (methodName != null) {
+			methodName.setRefactoredName(min.name);
+		}
+		if (methodDesc != null) {
+			methodDesc.setRefactoredName(min.desc);
+		}
+		return this;
+	}
+	
+	public CallbackMappingData buildRefacMethod(MethodNode mn) {
+		if (methodName != null) {
+			methodName.setRefactoredName(mn.name);
+		}
+		if (methodDesc != null) {
+			methodDesc.setRefactoredName(mn.desc);
+		}
+		return this;
+	}
+	
+	public CallbackMappingData buildObfCallback(MethodInsnNode min) {
+		if (callbackName != null) {
+			callbackName.setObfuscatedName(min.name);
+		}
+		if (methodDesc != null) {
+			methodDesc.setObfuscatedName(min.desc);
+		}
+		return this;
+	}
+	
+	public CallbackMappingData buildObfCallback(MethodNode mn) {
+		if (callbackName != null) {
+			callbackName.setObfuscatedName(mn.name);
+		}
+		if (callbackDesc != null) {
+			callbackDesc.setObfuscatedName(mn.desc);
+		}
+		return this;
+	}
+	
+	public CallbackMappingData buildRefacCallback(MethodInsnNode min) {
+		if (callbackName != null) {
+			callbackName.setRefactoredName(min.name);
+		}
+		if (callbackDesc != null) {
+			callbackDesc.setRefactoredName(min.desc);
+		}
+		return this;
+	}
+	
+	public CallbackMappingData buildRefacCallback(MethodNode mn) {
+		if (callbackName != null) {
+			callbackName.setRefactoredName(mn.name);
+		}
+		if (callbackDesc != null) {
+			callbackDesc.setRefactoredName(mn.desc);
+		}
+		return this;
+	}
+	
 	public MappingData getMethodOwner() {
 		return methodOwner;
 	}
-
+	
 	public CallbackMappingData setMethodOwner(ClassMappingData methodOwner) {
 		this.methodOwner = methodOwner;
 		return this;
 	}
-
+	
 	public MappingData getCallbackOwner() {
 		return callbackOwner;
 	}
-
+	
 	public CallbackMappingData setCallbackOwner(ClassMappingData callbackOwner) {
 		this.callbackOwner = callbackOwner;
 		return this;
 	}
-
+	
 	public MappingData getMethodName() {
 		return methodName;
 	}
-
+	
 	public CallbackMappingData setMethodName(MappingData methodName) {
 		this.methodName = methodName;
 		return this;
 	}
-
+	
 	public MappingData getMethodDesc() {
 		return methodDesc;
 	}
-
+	
 	public CallbackMappingData setMethodDesc(MappingData methodDesc) {
 		this.methodDesc = methodDesc;
 		return this;
 	}
-
+	
 	public MappingData getCallbackName() {
 		return callbackName;
 	}
-
+	
 	public CallbackMappingData setCallbackName(MappingData callbackName) {
 		this.callbackName = callbackName;
 		return this;
 	}
-
+	
 	public MappingData getCallbackDesc() {
 		return callbackDesc;
 	}
-
+	
 	public CallbackMappingData setCallbackDesc(MappingData callbackDesc) {
 		this.callbackDesc = callbackDesc;
 		return this;
 	}
-
+	
 	public boolean isStatic() {
 		return isStatic;
 	}
-
+	
 	public CallbackMappingData setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
 		return this;
 	}
-
+	
 	@Override
 	public CallbackMappingData identify() {
 		super.identify();
 		return this;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -106,7 +189,7 @@ public class CallbackMappingData extends Identifiable {
 		result = (prime * result) + ((methodOwner == null) ? 0 : methodOwner.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
