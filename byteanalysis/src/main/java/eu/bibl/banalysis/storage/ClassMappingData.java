@@ -1,28 +1,29 @@
 package eu.bibl.banalysis.storage;
 
 public class ClassMappingData extends MappingData {
-
-	protected InterfaceMappingData interfaceData;
-
+	
+	protected InterfaceMappingData[] interfaceDatas;
+	
 	public ClassMappingData(String refactoredName) {
 		super(refactoredName);
 	}
-
-	public ClassMappingData(String refactoredName, InterfaceMappingData interfaceData) {
+	
+	public ClassMappingData(String refactoredName, InterfaceMappingData... interfaceDatas) {
 		super(refactoredName);
-		this.interfaceData = interfaceData;
+		this.interfaceDatas = interfaceDatas;
 	}
-
-	public ClassMappingData(String obfuscatedName, String refactoredName, InterfaceMappingData interfaceData) {
+	
+	public ClassMappingData(String obfuscatedName, String refactoredName, InterfaceMappingData... interfaceDatas) {
 		super(obfuscatedName, refactoredName);
-		this.interfaceData = interfaceData;
+		this.interfaceDatas = interfaceDatas;
 	}
-
-	public InterfaceMappingData getInterfaceMappingData() {
-		return interfaceData;
+	
+	public InterfaceMappingData[] getInterfaceMappingDatas() {
+		return interfaceDatas;
 	}
-
-	public void setInterfaceData(InterfaceMappingData mappingData) {
-		interfaceData = mappingData;
+	
+	public ClassMappingData setInterfaceData(InterfaceMappingData... interfaceDatas) {
+		this.interfaceDatas = interfaceDatas;
+		return this;
 	}
 }
